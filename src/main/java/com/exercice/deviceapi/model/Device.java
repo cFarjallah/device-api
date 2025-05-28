@@ -3,21 +3,36 @@ package com.exercice.deviceapi.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+
+/**
+ * Entity representing a device with name, brand, state, and creation timestamp.
+ */
 @Entity
 public class Device {
+    /**
+     * Unique identifier for the device.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String brand;
+    /**
+     * Current state of the device (e.g., IN_USE, AVAILABLE).
+     */
     @Enumerated(EnumType.STRING)
     private State state;
+    /**
+     * Timestamp when the device was created.
+     * This field is set automatically on persist and is not updatable.
+     */
     @Column(updatable = false)
     private LocalDateTime creationTime;
 
-    protected Device(){
+    protected Device() {
 
     }
+
     public Device(String name, String brand, State state) {
         this.name = name;
         this.brand = brand;
@@ -60,6 +75,10 @@ public class Device {
         return creationTime;
     }
 
+    /**
+     * Callback method invoked automatically before the entity is persisted.
+     * Sets the creationTime field to the current time.
+     */
     @PrePersist
     private void onCreate() {
         creationTime = LocalDateTime.now();

@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface DeviceRepository extends JpaRepository<Device, Long> {
     List<Device> findByBrand(String brand);
+
     List<Device> findByState(State state);
 
 
